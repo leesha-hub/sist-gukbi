@@ -1,6 +1,6 @@
 
-public class PrintMain02 {
-	public static void main(String args[]) {
+public class PrintMain02{
+	public static void main(String[] args) {
 		/*
 		 * [실습] 
 		 * 
