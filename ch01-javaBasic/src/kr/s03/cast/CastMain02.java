@@ -30,5 +30,8 @@ public class CastMain02 {
 //		int result4 = in2 + ft;
 		int result4 = in2 + (int)ft; // ft : float -> int
 		System.out.println("result4 = " + result4);
+		
+		
+		
 	}
 }

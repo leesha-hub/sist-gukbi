@@ -38,6 +38,6 @@ public class VariableMain01 {
 		System.out.println("결과 : " + (a + b));
 		
 		// int no;
-		// System.out.println(no);
+		//	System.out.println(no);
 	}
 }

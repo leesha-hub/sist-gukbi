@@ -56,5 +56,11 @@ public class VariableTypeMain01 {
 		// 문자열 표시(기본자료형이 아님, 참조자료형)
 		String str = "Hello World!";		
 		System.out.println("str = " + str);
+		
+		
+		
+		
+		
+		
 	}
 }
