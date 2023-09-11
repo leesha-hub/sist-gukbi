@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 package kr.s19.object.array;
 
 import java.util.Scanner;
@@ -65,3 +66,21 @@ public class ScoreMain {
 
 
 
+=======
+package kr.s19.object.array;
+
+public class ScoreMain {
+
+	/*
+	 * [실습]
+	 * 1. Scanner 객체 생성
+	 * 2. 배열의 길이 4인 scoreArray 배열 생성
+	 * 3. 변수 전체 과목 총점(total), 전체 과목 평균(avg) 
+	 * 4. Score 객체를 4개 생성해서 배열에 저장
+	 *    이름, 국어, 영어, 수학 점수 입력 받아서 객체에 저장하시오.
+	 * 5. 반복문을 이용한 객체의 멤버 변수 값 출력
+	 *    이름, 국어, 영어, 수학, 총점, 평균, 등급
+	 * 6. 전체 과목 총점, 전체 과목 평균        
+	 * */
+}
+>>>>>>> Stashed changes

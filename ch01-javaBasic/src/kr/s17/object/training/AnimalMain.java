@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 package kr.s17.object.training;
 
 public class AnimalMain {
@@ -47,3 +48,10 @@ public class AnimalMain {
 
 
 
+=======
+package kr.s17.object.training;
+
+public class AnimalMain {
+
+}
+>>>>>>> Stashed changes
