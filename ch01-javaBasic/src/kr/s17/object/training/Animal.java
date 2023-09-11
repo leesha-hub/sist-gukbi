@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 package kr.s17.object.training;
 
 public class Animal {
@@ -44,19 +43,3 @@ public class Animal {
 		return fly;
 	}
 }
-
-
-
-
-
-
-=======
-package kr.s17.object.training;
-
-public class Animal {
-	/*
-	 * [실습]
-	 * 1. 멤버 변수 : 이름(name), 나이(int), 비행여부(fly)
-	 * */
-}
->>>>>>> Stashed changes
