@@ -1,4 +1,4 @@
-import java.util.HashMap;
+//import java.util.HashMap;
 import java.util.Map;
 
 //import java.util.Arrays;
@@ -47,31 +47,31 @@ public class dangit2 {
 import java.util.HashMap;
 import java.util.Map;
 
-class Solution {
-    public String[] solution(String[] players, String[] callings) {
-        String[] answer = {};        
-        Map<String,Integer> map = new HashMap<String,Integer>();
-        
-        int i=0;
-        for(String playerName : players) {
-        	map.put(playerName, i);
-        	i++;
-        }
-        for(String callName : callings) {
-    		String tmp = "";
-    		int findIdx = map.get(callName);
-    		if(findIdx == 0) {
-        		break;
-    		} else {
-    			map.put(callName, findIdx-1);
-                map.put(players[findIdx-1], findIdx);
-                
-                tmp = players[findIdx];
-                players[findIdx] = players[findIdx-1];
-    			players[findIdx-1] = tmp;
-    		}    	
-        }
-        answer = players;
-        return answer;
-    }
-}
+//class Solution {
+//    public String[] solution(String[] players, String[] callings) {
+//        String[] answer = {};        
+//        Map<String,Integer> map = new HashMap<String,Integer>();
+//        
+//        int i=0;
+//        for(String playerName : players) {
+//        	map.put(playerName, i);
+//        	i++;
+//        }
+//        for(String callName : callings) {
+//    		String tmp = "";
+//    		int findIdx = map.get(callName);
+//    		if(findIdx == 0) {
+//        		break;
+//    		} else {
+//    			map.put(callName, findIdx-1);
+//                map.put(players[findIdx-1], findIdx);
+//                
+//                tmp = players[findIdx];
+//                players[findIdx] = players[findIdx-1];
+//    			players[findIdx-1] = tmp;
+//    		}    	
+//        }
+//        answer = players;
+//        return answer;
+//    }
+//}
