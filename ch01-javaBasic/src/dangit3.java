@@ -1,9 +1,4 @@
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Stack;
 
 /*
 예제	dartResult	answer	설명
@@ -18,102 +13,80 @@ import java.util.Stack;
 
 public class dangit3 {
 	public static void main(String[] args) {
-//		String dartResult = "1S2D*3T";
-//		String dartResult = "1D2S#10S";
-//		String dartResult = "1D2S0T";
-//		String dartResult = "1S*2T*3S";
-//		String dartResult = "1D#2S*3S";
-//		String dartResult = "1T2D3D#";
-//		String dartResult = "1D2S3T*";
+//		int[] lost = {2,4};
+//		int[] reserve = {1,3,5};
+//		int n = 5;
+		
+//		int[] lost = {2,4};
+//		int[] reserve = {3};
+//		int n = 5;
+//		
+//		int[] lost = {3};
+//		int[] reserve = {1};
+//		int n = 3;
+		
+		int[] lost = {4,5};
+		int[] reserve = {4,3};
+		int n = 5;
 
 		Solution ss = new Solution();
-		ss.solution(dartResult);
+		ss.solution(n, lost, reserve);
 	}
 }
 
-//class Solution {
-//    public int solution(String dartResult) {
-//        int answer = 0;
-//        String[] dartFomularSplit = new String[3];
-//        int[] dartFomularMake = new int[3];
-//        
-//        int splitCnt = 0;
-//        int splitIdx = 0;
-//        for(int i=0; i<=dartResult.length()-1; i++) {
-//        	if(dartResult.charAt(i) == 'S' 
-//        		|| dartResult.charAt(i) == 'D'
-//        		|| dartResult.charAt(i) == 'T') {
-//        		if(splitCnt == 2) { i=dartResult.length()-1; } // 3번째 수식 *,# 잘림 방지
-//        		dartFomularSplit[splitCnt] = dartResult.substring(splitIdx, i+1);
-//        		System.out.println(dartFomularSplit[splitCnt]);
-//        		splitCnt ++;
-//        		splitIdx = i+1;
-//    		}
-//    	}
-//        
-//        int makeCnt = 0;
-//        for(int j=0; j<=dartFomularSplit.length-1; j++) {
-//        	for(int k=0; k<=dartFomularSplit[j].length()-1; k++) {
-//        		
-//        	}
-//        }
-//        
-//        return answer;
-//    }
-//}
-
 class Solution {
-    public int solution(String dartResult) {
-        int answer = 0;
+	public int solution(int n, int[] lost, int[] reserve) {
+		int answer = 0;
         
-        Stack<Character> st = new Stack();
-        
-        //1D2S#10S
-        for(int i=0; i<=dartResult.length()-1; i++) {
-        	if(
-    			((i+1) <= dartResult.length()-1) 
-    			&& (dartResult.charAt(i) == '1' && dartResult.charAt(i+1) == '0')
-			) {
-        		// 10일때 X로 대체
-        		st.add('X');
-        		i++;
-        	} else {
-        		st.add(dartResult.charAt(i));
-        	}
-        }
-        
-        int makeCnt = 0;
-        int[] dartFomularMake = new int[3];
-        for(Character factor : st) {        	
-        	if(factor == 'S' || factor == 'D' || factor == 'T') {
-        		int powNum = 0;
-        		if(factor == 'S') {
-        			powNum = 1;
-        		} else if(factor == 'D') {
-        			powNum = 2;
-        		} else if(factor == 'T') {
-        			powNum = 3;
-        		}
-        		dartFomularMake[makeCnt] = (int) Math.pow(dartFomularMake[makeCnt], powNum);
-        		makeCnt ++;
-        	} else if (factor == '*' || factor == '#') {
-        		if(factor == '*') { 
-    				dartFomularMake[makeCnt-1] *= 2;
-        			if(makeCnt-2 >= 0) {
-        				dartFomularMake[makeCnt-2] *= 2;
-        			}
-        		} else {
-        			dartFomularMake[makeCnt-1] *= -1;
-        		}
-        	} else {
-        		if(factor == 'X') {
-        			dartFomularMake[makeCnt] = 10;
-        		} else {
-        			dartFomularMake[makeCnt] = Integer.parseInt(String.valueOf(factor));
-        		}
-        	}
-        }
-        answer = dartFomularMake[0] + dartFomularMake[1] + dartFomularMake[2];
-        return answer;
-    }
+        Arrays.sort(lost);
+        Arrays.sort(reserve);
+
+		int[] list = new int[n];
+		for (int i = 0; i <= n-1; i++) {
+			if (i <= lost.length - 1) {
+				list[lost[i] - 1] = -1;
+			}
+			if (i <= reserve.length - 1) {
+				list[reserve[i] - 1] = 2;
+			} 
+			if(list[i] == 0) {
+				list[i] = 1;
+			}
+		}
+		
+		for (int j = 0; j <= lost.length - 1; j++) {
+			boolean borrowYN = false;
+			
+			// 도난 당한 사람 중 여벌 있는 경우 check
+			int findIndex = Arrays.binarySearch(reserve, lost[j]);
+			if(findIndex > 0) {
+				list[reserve[findIndex]-1] = 1;
+			}
+			// 앞 확인
+			if (lost[j] > 1) {
+				if (list[lost[j] - 2] == 2) {
+					list[lost[j] - 1] = 1;
+					list[lost[j] - 2] = 1;
+					borrowYN = true;
+                    continue;
+				}
+			}
+			// 뒤 확인
+			if (!borrowYN && lost[j] < list.length) {
+				if (list[lost[j]] == 2) {
+					list[lost[j] - 1] = 1;
+					list[lost[j]] = 1;
+					borrowYN = true;
+                    continue;
+				}
+			}
+		}
+		
+		for (int i = 0; i <= list.length - 1; i++) {
+			if (list[i] > 0) {
+				answer++;
+			}
+		}
+		return answer;
+	}
 }
