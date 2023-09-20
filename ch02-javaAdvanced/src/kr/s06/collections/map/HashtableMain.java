@@ -31,9 +31,5 @@ public class HashtableMain {
 			String key = en.nextElement();
 			System.out.println("key : " + key + ", value : " + ht.get(key));
 		}
-		
 	}
 }
-
-
-
