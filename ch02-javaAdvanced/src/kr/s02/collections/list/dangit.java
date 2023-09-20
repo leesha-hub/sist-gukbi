@@ -1,134 +1,140 @@
 package kr.s02.collections.list;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import java.util.regex.Pattern;
 /*
- * 문제 설명
-수포자는 수학을 포기한 사람의 준말입니다. 수포자 삼인방은 모의고사에 수학 문제를 전부 찍으려 합니다. 수포자는 1번 문제부터 마지막 문제까지 다음과 같이 찍습니다.
-
-1번 수포자가 찍는 방식: 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, ...
-2번 수포자가 찍는 방식: 2, 1, 2, 3, 2, 4, 2, 5, 2, 1, 2, 3, 2, 4, 2, 5, ...
-3번 수포자가 찍는 방식: 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, ...
-
-1번 문제부터 마지막 문제까지의 정답이 순서대로 들은 배열 answers가 주어졌을 때, 가장 많은 문제를 맞힌 사람이 누구인지 배열에 담아 return 하도록 solution 함수를 작성해주세요.
-
-제한 조건
-시험은 최대 10,000 문제로 구성되어있습니다.
-문제의 정답은 1, 2, 3, 4, 5중 하나입니다.
-가장 높은 점수를 받은 사람이 여럿일 경우, return하는 값을 오름차순 정렬해주세요.
-입출력 예
-answers	return
-[1,2,3,4,5]	[1]
-[1,3,2,4,2]	[1,2,3]
+no	new_id	result
+예1	"...!@BaT#*..y.abcdefghijklm"	"bat.y.abcdefghi"
+예2	"z-+.^."	"z--"
+예3	"=.="	"aaa"
+예4	"123_.def"	"123_.def"
+예5	"abcdefghijklmn.p"	"abcdefghijklmn"
 */
 
 public class dangit {
 	public static void main(String[] args) {
-		int[] answer = { 1, 2, 3, 4, 5 };
-//		int[] answer = { 1, 3, 2, 4, 2 };
+		String new_id = "._-";
 		Solution ss = new Solution();
-		ss.solution(answer);
+		ss.solution(new_id);
 	}
 }
 
-
-//class Solution {
-//	public int[] solution(int[] answers) {
-//		int[] answer = {};
-//		int[][] supoza = { { 1, 2, 3, 4, 5 }, { 2, 1, 2, 3, 2, 4, 2, 5 }, { 3, 3, 1, 1, 2, 2, 4, 4, 5, 5 } };
-//		int[][] supozaJumsu = { { 1, 0 }, { 2, 0 }, { 3, 0 } };
-//
-//		int jumsu = 0;
-//		int dup_chk = 1;
-//		for (int i = 0; i <= supoza.length - 1; i++) {
-//			int divideN = supoza[i].length;
-//			for (int j = 0; j <= answers.length - 1; j++) {
-//				if (answers[j] == (supoza[i][j % divideN])) {
-//					jumsu++;
-//				}
-//			}
-//			supozaJumsu[i][1] = jumsu;
-//			jumsu = 0;
-//		}
-//
-//		// 1열(두 번째 열)을 기준으로 정렬
-//		Arrays.sort(supozaJumsu, new Comparator<int[]>() {
-//			@Override
-//			public int compare(final int[] entry1, final int[] entry2) {
-//				// entry1[1]과 entry2[1]을 비교하여 오름차순 정렬
-//				return Integer.compare(entry2[1], entry1[1]);
-//			}
-//		});
-//
-//		// 동점 있는지 확인
-//		for (int i = 0; i < supozaJumsu.length; i++) {
-//			if (i == 0) {
-//				answer = new int[3];
-//				answer[i] = supozaJumsu[i][0];
-//			} else {
-//				if (answer[i - 1] == answer[i]) {
-//					answer[i] = supozaJumsu[i][0];
-//				} 
-//			}
-//		}
-//		return answer;
-//	}
-//}
-
-
 class Solution {
-	public int[] solution(int[] answers) {
-		int[] answer = {};
-		int[][] supoza = { { 1, 2, 3, 4, 5 }, { 2, 1, 2, 3, 2, 4, 2, 5 }, { 3, 3, 1, 1, 2, 2, 4, 4, 5, 5 } };
-		int[][] supozaJumsu = { { 1, 0 }, { 2, 0 }, { 3, 0 } };
-
-		int jumsu = 0;
-		int dup_chk = 1;
-		for (int i = 0; i <= supoza.length - 1; i++) {
-			int divideN = supoza[i].length;
-			for (int j = 0; j <= answers.length - 1; j++) {
-				if (answers[j] == (supoza[i][j % divideN])) {
-					jumsu++;
+	public String solution(String new_id) {
+		String answer = "";
+		boolean newIdCheck = false;
+		
+		// while문 안에 포함될 필요가 없는 step1
+		String newRecommandID = makeIdStep1(new_id);
+		// while문 안에 포함될 필요가 없는 step2
+		newRecommandID = makeIdStep2(newRecommandID);
+		
+		while(!newIdCheck) {
+			newRecommandID = makeIdStep3(newRecommandID); // 마침표 처음이나 끝에 있는 경우
+			newRecommandID = makeIdStep4(newRecommandID); // 빈문자열인 경우
+			newRecommandID = makeIdStep5(newRecommandID); // 16자 이상인 경우
+			newRecommandID = makeIdStep6(newRecommandID); // 2자 이하인 경우
+			
+			// 추천 아이디 적합한지 확인
+			newIdCheck = makeIdCheck(newRecommandID);
+		}
+		answer = newRecommandID;
+		return answer;
+	}
+	
+	public boolean makeIdCheck(String newRecID) {
+		String newRecommandID = newRecID;
+		
+		// 빈문자열이거나 2자 이하인 경우 false
+		if(newRecommandID.equals("") || newRecommandID.length() <= 2) {
+			return false;
+		}
+		// 처음과 끝에 마침표가 있는 경우 false
+		if(newRecommandID.length() == 1 && newRecommandID.charAt(0) == '.') {
+			return false;
+		} else {
+			if (newRecommandID.charAt(0) == '.' || newRecommandID.charAt(newRecommandID.length() - 1) == '.') {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	// step1 :: 대문자인 경우 소문자로 변경, 허용문자 외 제거(소문자, 숫자, 빼기, 밑줄, 마침표 사용가능)
+	public String makeIdStep1(String new_id) {
+		String newRecommandID = "";
+		if (!new_id.equals("")) {
+			for (int i = 0; i <= new_id.length() - 1; i++) {
+				if (!Pattern.matches("^[a-zA-Z0-9._-]", new_id.substring(i, i + 1))) {
+					newRecommandID += "";
+				} else {
+					int letterNum = (int) new_id.charAt(i);
+					if (letterNum >= 65 && letterNum <= 90) {
+						newRecommandID += (char) (int) (new_id.charAt(i) + 32);
+					} else {
+						newRecommandID += new_id.charAt(i);
+					}
 				}
 			}
-			supozaJumsu[i][1] = jumsu;
-			if(i > 0) {
-				if(supozaJumsu[i-1][1] == supozaJumsu[i][1]) {
-					dup_chk ++;
-				} 
-			}
-			jumsu = 0;
 		}
-
-		// 1열(두 번째 열)을 기준으로 정렬
-		Arrays.sort(supozaJumsu, new Comparator<int[]>() {
-			@Override
-			public int compare(final int[] entry1, final int[] entry2) {
-				// entry1[1]과 entry2[1]을 비교하여 오름차순 정렬
-				return Integer.compare(entry2[1], entry1[1]);
-			}
-		});
-
-		// 동점 있는지 확인
-		if ((supozaJumsu[0][1] == supozaJumsu[1][1]) && (supozaJumsu[0][1] == supozaJumsu[2][1])) {
-			answer = new int[3];
-			answer[0] = supozaJumsu[0][0];
-			answer[1] = supozaJumsu[1][0];
-			answer[2] = supozaJumsu[2][0];
-		} else if (supozaJumsu[0][1] == supozaJumsu[1][1]) {
-			answer = new int[2];
-			answer[0] = supozaJumsu[0][0];
-			answer[1] = supozaJumsu[1][0];
+		return newRecommandID;
+	}
+	
+	// step2 :: 마침표 2개 연속될 경우 1개로 변경
+	public String makeIdStep2(String newRecID) {
+		String newRecommandID = newRecID;
+		while (newRecommandID.contains("..")) {
+			newRecommandID = newRecommandID.replace("..", ".");
+		}
+		return newRecommandID;
+	}
+	
+	// step3 :: 마침표가 처음이나 끝에 위치한 경우 제거
+	public String makeIdStep3(String newRecID) {
+		String newRecommandID = newRecID;
+		if (newRecommandID.equals("")) {
+			newRecommandID = makeIdStep4(newRecommandID);
+		}
+		if (newRecommandID.length() == 1 && newRecommandID.charAt(0) == '.') {
+			newRecommandID = "";
 		} else {
-			answer = new int[1];
-			answer[0] = supozaJumsu[0][0];
+			if (newRecommandID.charAt(0) == '.') {
+				newRecommandID = newRecommandID.substring(1, newRecommandID.length());
+			}
+			if (newRecommandID.charAt(newRecommandID.length() - 1) == '.') {
+				newRecommandID = newRecommandID.substring(0, newRecommandID.length() - 1);
+			}
 		}
-		return answer;
+		return newRecommandID;
+	}
+	
+	public String makeIdStep4(String newRecID) {
+		String newRecommandID = newRecID;
+		// step4 :: 빈문자열이면 a대입
+		if (newRecommandID.equals("")) {
+			newRecommandID = "a";
+		}
+		return newRecommandID;
+	}
+	
+	public String makeIdStep5(String newRecID) {
+		String newRecommandID = newRecID;
+		// step5 :: 16자 이상이면 15개 제외 나머지 모두 제거
+		if (newRecommandID.length() >= 16) {
+			newRecommandID = newRecommandID.substring(0, 15);
+		}
+		return newRecommandID;
+	}
+	
+	public String makeIdStep6(String newRecID) {
+		String newRecommandID = newRecID;
+		// step6 :: 2자 이하이면 마지막 문자를 3글자가 될때까지 반복해서 붙이기
+		if (newRecommandID.length() <= 2) {
+			char lastWord;
+			lastWord = newRecommandID.charAt(newRecommandID.length() - 1);
+			while (newRecommandID.length() < 3) {
+				newRecommandID += lastWord;
+			}
+		}
+		return newRecommandID;
 	}
 }
