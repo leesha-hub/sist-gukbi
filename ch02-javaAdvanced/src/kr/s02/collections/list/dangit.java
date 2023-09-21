@@ -1,62 +1,67 @@
 package kr.s02.collections.list;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /*
-survey	choices	result
-["AN", "CF", "MJ", "RT", "NA"]	[5, 3, 2, 7, 5]	"TCMA"
-["TR", "RT", "TR"]	[7, 1, 3]	"RCJA"
+today	terms	privacies	result
+"2022.05.19"	["A 6", "B 12", "C 3"]	["2021.05.02 A", "2021.07.01 B", "2022.02.19 C", "2022.02.20 C"]	[1, 3]
+"2020.01.01"	["Z 3", "D 5"]	["2019.01.01 D", "2019.11.15 Z", "2019.08.02 D", "2019.07.01 D", "2018.12.28 Z"]	[1, 4, 5]
 */
 
 public class dangit {
 	public static void main(String[] args) {
-		String[] survey = { "TR", "RT", "TR" };
-		int[] choices = { 7, 1, 3 };
+		String today = "2020.01.01";
+		String[] terms = { "Z 3", "D 5" };
+		String[] privacies = { "2019.01.01 D", "2019.11.15 Z", "2019.08.02 D", "2019.07.01 D", "2018.12.28 Z" };
 		Solution ss = new Solution();
-		ss.solution(survey, choices);
+		ss.solution(today, terms, privacies);
 	}
 }
 
 class Solution {
-	public String solution(String[] survey, int[] choices) {
-		String answer = "";
+	public int[] solution(String today, String[] terms, String[] privacies) {
+		List<Integer> answer = new ArrayList<Integer>();
+		Map<String, Integer> termsMap = new HashMap<String, Integer>();
 
-		Map<String, Integer> mp = new HashMap<String, Integer>();
-		String[] priorityFirst = { "R", "C", "J", "A" };
-		String[] prioritySecond = { "T", "F", "M", "N" };
-		
-		mp.put("R", 0);
-		mp.put("T", 0);
-		mp.put("C", 0);
-		mp.put("F", 0);
-		mp.put("J", 0);
-		mp.put("M", 0);
-		mp.put("A", 0);
-		mp.put("N", 0);
+		for (String term : terms) {
+			String[] termSplitArr = term.split(" ");
+			termsMap.put(termSplitArr[0], Integer.parseInt(termSplitArr[1]));
+		}
 
+		String[] todaySplit = today.split("\\.");
+		int todayYear = Integer.parseInt(todaySplit[0]);
+		int todayMonth = Integer.parseInt(todaySplit[1]);
+		int todayDay = Integer.parseInt(todaySplit[2]);
 		int i = 0;
-		for(int agree : choices) {
-			int agreePoint = 0;
-			if(agree < 4) {
-				agreePoint = mp.get(survey[i].substring(0,1)) + agree;
-				mp.put(survey[i].substring(0,1), agreePoint);
-			} else if (agree > 4) {
-				agreePoint = mp.get(survey[i].substring(1,2)) + (agree-4);
-				mp.put(survey[i].substring(1,2), agreePoint);
+		for (String privacy : privacies) {
+			String[] privacySplitArr = privacy.split(" ");
+			String[] privacyCollectDay = privacySplitArr[0].split("\\.");
+			int collectYear = Integer.parseInt(privacyCollectDay[0]);
+			int collectMonth = Integer.parseInt(privacyCollectDay[1]);
+			int CollectDay = Integer.parseInt(privacyCollectDay[2]);
+
+			String privacyTerm = privacySplitArr[1];
+
+			int termsDate = (termsMap.get(privacyTerm)*28)-1;
+			if(CollectDay == 1) {
+				collectMonth += termsMap.get(privacyTerm)-1;
+				CollectDay = 28;
+			}
+			
+			System.out.println("termsDate : " + termsDate);
+		
+			Date date1 = new Date(todayYear, todayMonth, todayDay);
+			Date date2 = new Date(collectYear, collectMonth, CollectDay);
+			int result = date1.compareTo(date2);
+			if (result > 0) {
+				answer.add(i + 1);
 			}
 			i++;
 		}
-		
-		for(int j=0; j<=3; j++) {
-			if(mp.get(priorityFirst[j]) >= mp.get(prioritySecond[j]))
-			{
-				answer += priorityFirst[j];
-			} else {
-				answer += prioritySecond[j];
-			}
-		}
-		System.out.println(answer);
-		return answer;
+		return answer.stream().mapToInt(integer -> integer).toArray();
 	}
 }
