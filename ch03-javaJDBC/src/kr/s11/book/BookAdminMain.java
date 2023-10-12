@@ -6,12 +6,12 @@ import java.io.InputStreamReader;
 
 public class BookAdminMain {
 	private BufferedReader br;
-	private BookDAO dao;
+	private BookDAO daoBook;
 	
 	public BookAdminMain() {
 		try {
 			br = new BufferedReader(new InputStreamReader(System.in));
-			dao = new BookDAO();
+			daoBook = new BookDAO();
 			//메뉴 호출
 			callMenu();
 		}catch(Exception e) {
@@ -23,16 +23,21 @@ public class BookAdminMain {
 	//메뉴
 	public void callMenu() throws IOException{
 		while(true) {
-			System.out.print("1.도서 등록,2.도서 목록,3.대출 목록,4.회원 목록,5.종료>");
+			System.out.print("1.도서 등록, 2.도서 목록, 3.대출 목록, 4.회원 목록, 5.종료>");
 			try {
 				int no = Integer.parseInt(br.readLine());
 				if(no == 1) {//도서 등록
-					/*
-					도서명:자바
-					카테고리:IT
-					1건의 도서 정보를 등록했습니다.
-					 */
-				}else if(no == 2) {//도서 목록
+					System.out.print("도서명:");
+					String bk_name = br.readLine();
+					System.out.print("카테고리:");
+					String bk_category = br.readLine();
+
+					boolean flag = daoBook.registerBook(bk_name, bk_category);
+					if (!flag) {
+						System.out.println("도서 등록 실패");
+					}
+				} else if (no == 2) {// 도서 목록
+					daoBook.allBookList();
 					/*
 					---------------------------
 					번호	카테고리	도서명	대출여부	등록일

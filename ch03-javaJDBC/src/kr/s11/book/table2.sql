@@ -3,6 +3,7 @@ create table member(
  me_passwd varchar2(10) not null,
  me_name varchar2(30) not null,
  me_phone varchar2(13) not null,
+ me_admin char(1) default 0 not null, 
  me_regdate date default sysdate not null
 );
 
@@ -23,10 +24,3 @@ create table reservation(
  re_modifydate date
 );
 create sequence reservation_seq;
-
-
-
-
-
-
-
