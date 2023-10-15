@@ -72,7 +72,9 @@ public class BookDAO {
 			conn = DBUtil.getConnection();
 			
 			//SQL문 작성
-			sql = "SELECT * FROM book ORDER BY bk_num DESC";
+			sql = "SELECT book.*, reservation.re_status FROM book "
+					+ "LEFT JOIN reservation "
+					+ "on book.bk_num = reservation.bk_num";
 			
 			//JDBC 수행 3단계 : PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);
@@ -87,6 +89,11 @@ public class BookDAO {
 					System.out.print(rs.getInt("bk_num") + "\t");
 					System.out.print(rs.getString("bk_category") + "\t");
 					System.out.print(rs.getString("bk_name") + "\t");
+					if(rs.getInt("re_status") == 1) { 
+						System.out.print("대출중" + "\t");
+					} else {
+						System.out.print("대출가능" + "\t");	
+					}
 					System.out.println(rs.getDate("bk_regdate"));
 				}while(rs.next());
 			}else {

@@ -7,11 +7,19 @@ import java.io.InputStreamReader;
 public class BookAdminMain {
 	private BufferedReader br;
 	private BookDAO daoBook;
+	private MemberDAO daoMember;
+	private ReservationDAO daoReservation;
+	private String me_id;
+	private boolean admin_flag;//관리자 여부
 	
-	public BookAdminMain() {
+	public BookAdminMain(String meId) {
 		try {
 			br = new BufferedReader(new InputStreamReader(System.in));
 			daoBook = new BookDAO();
+			daoMember = new MemberDAO();
+			daoReservation = new ReservationDAO();
+			me_id = meId;
+			admin_flag = daoMember.adminCheck(me_id);
 			//메뉴 호출
 			callMenu();
 		}catch(Exception e) {
@@ -38,33 +46,10 @@ public class BookAdminMain {
 					}
 				} else if (no == 2) {// 도서 목록
 					daoBook.allBookList();
-					/*
-					---------------------------
-					번호	카테고리	도서명	대출여부	등록일
-					-------------------------------------
-					42	천문		별이야기	대출가능	2023-10-10
-					41	IT		자바		대출중	2023-10-10
-					---------------------------
-					 */
 				}else if(no == 3) {//대출 목록
-					/*
-					--------------------------
-					번호	대출여부	대출자id	대출도서명	대출일		반납일
-					----------------------------------------
-					20	대출		blue	자바		2023-10-10
-					19	반납		sky		별이야기	2023-10-09	2023-10-10
-					--------------------------
-					 */
+					daoReservation.loanList(admin_flag, me_id);
 				}else if(no == 4) {//회원 목록
-					/*
-					------------------------------
-					아이디	이름		전화번호			가입일
-					------------------------------
-					sky		홍길동	010-1234-5678	2023-09-09
-					blue	박영식	010-5678-1234	2023-09-08
-					------------------------------
-					 */
-					
+					daoMember.allMemberList();					
 				}else if(no == 5) {//종료
 					System.out.println("프로그램 종료");
 					break;
@@ -77,9 +62,9 @@ public class BookAdminMain {
 		}
 	}
 	
-	public static void main(String[] args) {
-		new BookAdminMain();
-	}
+//	public static void main(String[] args) {
+//		new BookAdminMain();
+//	}
 }
 
 

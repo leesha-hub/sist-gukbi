@@ -82,41 +82,34 @@ public class BookUserMain {
 		}
 		if(admin_flag) {
 			// 관리자로 접속한 경우, 관리자 패널 노출
-			new BookAdminMain();
+			new BookAdminMain(me_id);
 		} else {
 			while(flag) {
 				System.out.print("1.도서대출, 2.MY대출목록, 3.대출도서 반납, 4.종료>");
 				try {
 					int no = Integer.parseInt(br.readLine());
 					if(no == 1) {//도서 대출
-						/*
-						------------------------
-						번호	카테고리	도서명	대출여부	등록일
-						--------------------------------
-						43	IT		자바		대출가능	2023-10-10
-						42 	천문		별이야기	대출가능	2023-10-10
-						------------------------
-						[도서 대출하기]
-						도서 번호:43
-						도서 1건이 대출되었습니다.
-						 */
-					}else if(no == 2) {//MY대출목록
-						/*
-						---------------------------
-						번호	도서명	대출여부	등록일
-						41	자바		대출중	2023-10-10
-						---------------------------
-						 */
+						daoBook.allBookList();
+						System.out.println("[도서 대출하기]");
+						System.out.print("도서 번호:");
+						int bk_num = Integer.parseInt(br.readLine());
+					
+						//대출중인 도서인지 확인
+						int count = daoReservation.checkLoan(bk_num);
+						if(count <= 0) {
+							//아닌 경우 대출로 상태 변경
+							daoReservation.loanBook(me_id, bk_num);
+							break;
+						} 			
+						System.out.println("도서 대출에 실패했습니다.");
+					} else if(no == 2) {//MY대출목록
+						daoReservation.loanList(admin_flag, me_id);
 					}else if(no == 3) {//대출도서 반납
-						/*
-						---------------------------
-						번호	도서명	대출여부	등록일
-						41	자바		대출중	2023-10-10
-						---------------------------
-						[도서 반납하기]
-						대출번호:41
-						1건의 도서가 반납되었습니다.
-						 */
+						daoReservation.loanList(admin_flag, me_id);
+						System.out.println("[도서 반납하기]");
+						System.out.print("도서 번호:");
+						int bk_num = Integer.parseInt(br.readLine());
+						daoReservation.givebackBook(bk_num);
 					}else if(no == 4) {//종료
 						System.out.println("프로그램 종료");
 						break;

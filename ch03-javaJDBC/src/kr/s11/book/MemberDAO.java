@@ -156,4 +156,45 @@ public class MemberDAO {
 		}
 		return flag;
 	}
+	
+	public void allMemberList() { 
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		
+		try {
+			//JDBC 수행 1,2단계
+			conn = DBUtil.getConnection();
+			
+			//SQL문 작성
+			sql = "SELECT * FROM member ORDER BY me_regdate DESC";
+			
+			//JDBC 수행 3단계 : PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			
+			System.out.println("---------------------");
+			//JDBC 수행 4단계 : SQL문을 실행해서 결과행들을 ResultSet에 담음
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				// 아이디	이름		전화번호			가입일
+				System.out.println("아이디\t이름\t전화번호\t가입일");
+				do{
+					System.out.print(rs.getString("me_id") + "\t");
+					System.out.print(rs.getString("me_name") + "\t");
+					System.out.print(rs.getString("me_phone") + "\t");
+					System.out.println(rs.getDate("me_regdate"));
+				}while(rs.next());
+			}else {
+				System.out.println("등록된 데이터가 없습니다.");
+			}
+			System.out.println("---------------------");
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			//자원 정리
+			DBUtil.executeClose(rs, pstmt, conn);
+		}
+	}	
 }
