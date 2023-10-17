@@ -36,7 +36,7 @@ public class ReservationDAO {
 			if (admin_flag) {
 				// SQL문 작성
 				sql = "SELECT reservation.*, book.bk_name FROM reservation " + "LEFT JOIN book "
-						+ "ON reservation.bk_num = book.bk_num " + "WHERE re_status = 1 ORDER BY re_num DESC";
+						+ "ON reservation.bk_num = book.bk_num ORDER BY re_num DESC";
 			} else {
 				// SQL문 작성
 				sql = "SELECT reservation.*, book.bk_name FROM reservation " + "LEFT JOIN book "
@@ -63,8 +63,8 @@ public class ReservationDAO {
 					}
 					System.out.print(rs.getString("me_id") + "\t");
 					System.out.print(rs.getString("bk_name") + "\t");
-					System.out.print(rs.getDate("re_regdate") + "\t");
-					System.out.println(rs.getDate("re_modifydate"));
+					System.out.print(rs.getTimestamp("re_regdate") + "\t");
+					System.out.println(rs.getTimestamp("re_modifydate"));
 				} while (rs.next());
 			} else {
 				System.out.println("등록된 데이터가 없습니다.");
@@ -154,7 +154,7 @@ public class ReservationDAO {
 			conn = DBUtil.getConnection();
 
 			// SQL문 작성
-			sql = "UPDATE reservation SET re_status=0, re_modifydate=SYSDATE WHERE bk_num=?";
+			sql = "UPDATE reservation SET re_status=0, re_modifydate=SYSDATE WHERE re_status=1 AND bk_num=?";
 
 			// JDBC 수행 3단계 : PreparedStatement 객체 생성
 			pstmt = conn.prepareStatement(sql);

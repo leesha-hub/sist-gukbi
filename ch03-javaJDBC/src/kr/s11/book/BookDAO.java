@@ -94,7 +94,7 @@ public class BookDAO {
 					} else {
 						System.out.print("대출가능" + "\t");	
 					}
-					System.out.println(rs.getDate("bk_regdate"));
+					System.out.println(rs.getTimestamp("bk_regdate"));
 				}while(rs.next());
 			}else {
 				System.out.println("등록된 데이터가 없습니다.");

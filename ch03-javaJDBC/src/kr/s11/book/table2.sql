@@ -7,6 +7,15 @@ create table member(
  me_regdate date default sysdate not null
 );
 
+create table member2(
+ me_id varchar2(10) primary key,
+ me_passwd varchar2(10) not null,
+ me_name varchar2(30) not null,
+ me_phone varchar2(13) not null,
+ me_admin number(1) default 0 not null, 
+ me_regdate date default sysdate not null
+);
+
 create table book(
  bk_num number primary key,
  bk_name varchar2(90) not null,
