@@ -2,11 +2,59 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>바비</title>
 <style>
+body {
+	margin: 0;
+}
+/* .movie.main {
+	height: 100vh;
+	width: 100vw;
+	background-image: url('./barbie_poster.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+} */
+.poster {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
 
+.mainPreview {
+	background-image: url('./barbie_poster_bottom.jpg');
+	text-align: center;
+	background-size: cover;
+}
+
+.mainPreview h1 {
+	display: block;
+}
+
+@font-face {
+    font-family: 'KimjungchulMyungjo-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulMyungjo-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
 </style>
 </head>
 <body>
+	<div class="movie mainPoster">
+		<img class="poster" src="./barbie_poster.jpg">
+	</div>
+
+	<div class="movie mainPreview">
+		<h1>메인 예고편</h1>
+		<iframe width="560" height="315"
+			src="https://www.youtube.com/embed/7FaRndNm3dE?si=DSibHvB6B7H7k04V"
+			title="YouTube video player" frameborder="0"
+			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+			allowfullscreen></iframe>
+	</div>
+
+	<div class="movie introduce"></div>
+
+	<div class="movie teaser"></div>
 </body>
 </html>
