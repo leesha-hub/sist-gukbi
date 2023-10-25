@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>반복문을 이용해서 객체의 속성 읽기</title>
+</head>
+<body>
+<script type="text/javascript">
+	//객체 정의
+	const product = {
+			//속성(key:value)
+			name:'eclipse',
+			price:'10,000원',
+			language:'한국어',
+			supportOS:'win10',
+			subscription:true
+	};
+	
+	//반복문을 이용한 속성 읽기
+	for(let key in product){
+		//for in 반복문을 이용해서 속성에 접근할 때는 객체로부터 key를
+		//문자열로 반환받기 때문에 객체명[문자열 key] 형식으로 호출해서 속성에
+		//접근할 수 있음
+		document.write(key + ':' + product[key] + '<br>');
+	}
+	
+</script>
+</body>
+</html>
+
+
+
+
+
