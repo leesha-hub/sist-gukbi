@@ -1,65 +1,33 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /*
-sequence	k	result
-[1, 2, 3, 4, 5]	7	[2, 3]
-[1, 1, 1, 2, 3, 4, 5]	5	[6, 6]
-[2, 2, 2, 2, 2]	6	[0, 2]
+targets	result
+[[4,5],[4,8],[10,14],[11,13],[5,12],[3,7],[1,4]]	3
 */
 
 public class dangit3 {
 	public static void main(String[] args) {
-		int[] sequence = { 1, 2, 3, 4, 5 };
-		int k = 7;
+		int[][] targets = { { 4, 5 }, { 4, 8 }, { 10, 14 }, { 11, 13 }, { 5, 12 }, { 3, 7 }, { 1, 4 } };
 
 		Solution ss = new Solution();
-		ss.solution(sequence, k);
+		ss.solution(targets);
 	}
 }
 
 class Solution {
-	public int[] solution(int[] sequence, int k) {
-		int[] answer = {-1,-1};
-		List<Integer> list = new ArrayList<Integer>();
-		
-		for(int seq_num : sequence) {
-			list.add(seq_num);
-		}
-
-		// k와 일치하는 요소가 있으면 바로 return
-		if (list.indexOf(k) != -1) {
-			int i = list.indexOf(k);
-			answer[0] = i;
-			answer[1] = i;
-			return answer;
-		}
-
-		int result = 0;
-		int start_idx = 0;
-		for (int i = 0; i <= sequence.length - 1; i++) {
-			
-			// 요소가 k보다 큰 경우 return
-			if(sequence[i] > k) {
-				return answer;
-			}
-			
-			result += list.get(i);
-			if (result == k) {
-				if ((answer[0] == -1) || (answer[1] - answer[0] > i - start_idx)) {
-					answer[0] = start_idx;
-					answer[1] = i;
-					if((i - start_idx) == 1) {
-						return answer;
-					}
-				}
-			} else if (result > k) {
-				result = 0;
-				start_idx++;
-				i = start_idx - 1;
-			}
-		}
-		return answer;
-	}
+    public int solution(int[][] targets) {
+        int answer = 0;
+        
+        Arrays.sort(targets, (o1, o2) -> {
+            return o1[0]-o2[0]; // 첫번째 숫자 기준 오름차순 {1,30}{2,10}{3,50}{4,20}{5,40}
+        });
+        
+        for(int i=0; i<=targets.length-1; i++) {
+        	System.out.println("targets[" + i + "][0] : " + targets[i][0] + " targets[" + i + "][1] : " + targets[i][1]);
+        }
+        return answer;
+    }
 }
