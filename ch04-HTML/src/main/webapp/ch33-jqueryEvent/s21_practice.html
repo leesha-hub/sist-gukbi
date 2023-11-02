@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<!-- 모바일 장치에서 웹사이트가 원하는 사이즈로 보여지게 처리 -->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>할 일 목록(TodoList)</title>
+<link rel="stylesheet"
+	href="https://unpkg.com/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+}
+
+.title {
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.todo {
+	text-decoration: line-through;
+}
+
+.container {
+	padding: 10px;
+}
+
+.panel-borderless {
+	border: 0;
+	box-shadow: none;
+}
+
+.pointer {
+	cursor:pointer;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class="card card-body bg-light">
+			<div class="title">할 일 목록(TodoList)</div>
+		</div>
+		<div class="card card-default card-borderless">
+			<div class="card-body">
+				<div class="ol">
+					<div class="input-group">
+						<input type="text" class="form-control" name="msg"
+							placeholder="할 일을 여기에 입력!" id="todo"> <span
+							class="btn btn-primary input-group-addon" id="add_btn"> 추가</span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<ul class="list-group" id="list">
+
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
