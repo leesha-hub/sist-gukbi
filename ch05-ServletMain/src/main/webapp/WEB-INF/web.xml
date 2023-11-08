@@ -4,11 +4,11 @@
   <!-- 에러 페이지 처리 -->
 <error-page>
     <error-code>404</error-code>
-    <location>/error404</location>
+    <location>/ch06-errorPage/error/error404</location>
 </error-page>
 <error-page>
     <error-code>500</error-code>
-    <location>/error500</location>
+    <location>/ch06-errorPage/error/error500</location>
 </error-page>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
