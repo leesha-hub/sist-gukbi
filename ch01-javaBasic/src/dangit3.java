@@ -1,33 +1,75 @@
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Comparator;
-import java.util.List;
 
 /*
-targets	result
-[[4,5],[4,8],[10,14],[11,13],[5,12],[3,7],[1,4]]	3
+과제는 시작하기로 한 시각이 되면 시작합니다.
+새로운 과제를 시작할 시각이 되었을 때, 
+
+기존에 진행 중이던 과제가 있다면 진행 중이던 과제를 멈추고 
+새로운 과제를 시작합니다.
+
+진행중이던 과제를 끝냈을 때, 잠시 멈춘 과제가 있다면, 
+멈춰둔 과제를 이어서 진행합니다.
+
+만약, 과제를 끝낸 시각에 새로 시작해야 되는 과제와 
+잠시 멈춰둔 과제가 모두 있다면, 새로 시작해야 하는 과제부터 진행합니다.
+
+멈춰둔 과제가 여러 개일 경우, 가장 최근에 멈춘 과제부터 시작합니다.
+plans	result
+[["korean", "11:40", "30"], ["english", "12:10", "20"], ["math", "12:30", "40"]]	["korean", "english", "math"]
+[["science", "12:40", "50"], ["music", "12:20", "40"], ["history", "14:00", "30"], ["computer", "12:30", "100"]]	["science", "history", "computer", "music"]
+[["aaa", "12:00", "20"], ["bbb", "12:10", "30"], ["ccc", "12:40", "10"]]	["bbb", "ccc", "aaa"]
 */
 
 public class dangit3 {
 	public static void main(String[] args) {
-		int[][] targets = { { 4, 5 }, { 4, 8 }, { 10, 14 }, { 11, 13 }, { 5, 12 }, { 3, 7 }, { 1, 4 } };
+		String[][] plans = {
+//				{ "korean", "11:40", "30" }, 
+//				{ "english", "12:10", "20" }, 
+//				{ "math", "12:30", "40" } 
 
+				{ "science", "12:40", "50" }, { "music", "12:20", "40" }, { "history", "14:00", "30" },
+				{ "computer", "12:30", "100" } };
 		Solution ss = new Solution();
-		ss.solution(targets);
+		ss.solution(plans);
 	}
 }
 
 class Solution {
-    public int solution(int[][] targets) {
-        int answer = 0;
-        
-        Arrays.sort(targets, (o1, o2) -> {
-            return o1[0]-o2[0]; // 첫번째 숫자 기준 오름차순 {1,30}{2,10}{3,50}{4,20}{5,40}
-        });
-        
-        for(int i=0; i<=targets.length-1; i++) {
-        	System.out.println("targets[" + i + "][0] : " + targets[i][0] + " targets[" + i + "][1] : " + targets[i][1]);
-        }
-        return answer;
-    }
+	public String[] solution(String[][] plans) {
+		String[] answer = new String[plans.length];
+
+		Arrays.sort(plans, (o1, o2) -> o1[1].compareTo(o2[1]));
+
+		Calendar planTimeBefore = Calendar.getInstance();
+		Calendar planTimeAfter = Calendar.getInstance();
+		String[] planFinishSubject = new String[plans.length];
+		String[] planLeftSubject = new String[plans.length];
+
+		for (int i = 0; i < plans.length; i++) {
+			for (int j = 0; j < plans[i].length; j++) {
+//				System.out.println(plans[i][j]);
+				
+				/*
+				 * case 1 앞시간 >= 뒷시간 : 문제 없음(수강완료)
+				 * case 2 앞시간 < 뒷시간 : 문제발생 할 수 있음
+				 *   ㄴ case 2-1) 수업이 뒷시간 보다 일찍 끝나면 : 문제 없음(수강완료)
+				 *   ㄴ case 2-2) 수업이 뒷시간 보다 늦게 끝나면 : 문제 발생(수강 미루기)
+				 * */
+
+				String[] planTimeSplit = plans[i][1].split(":");
+				int planHour = Integer.parseInt(planTimeSplit[0]);
+				int planMinute = Integer.parseInt(planTimeSplit[1]);
+				
+				
+						
+				
+//				date2.set(Calendar.HOUR, Integer.parseInt(plans[i + 1][1]));
+//				System.out.println();
+			}
+		}
+
+		return answer;
+	}
 }
