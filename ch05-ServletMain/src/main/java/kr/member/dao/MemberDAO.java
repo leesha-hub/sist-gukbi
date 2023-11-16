@@ -174,6 +174,10 @@ public class MemberDAO {
 		}
 		
 	}
+	
+	public void isCheckedPassword () {
+		
+	}
 }
 
 

@@ -49,21 +49,10 @@ class Solution {
 
 		for (int i = 0; i < plans.length; i++) {
 			for (int j = 0; j < plans[i].length; j++) {
-//				System.out.println(plans[i][j]);
-				
-				/*
-				 * case 1 앞시간 >= 뒷시간 : 문제 없음(수강완료)
-				 * case 2 앞시간 < 뒷시간 : 문제발생 할 수 있음
-				 *   ㄴ case 2-1) 수업이 뒷시간 보다 일찍 끝나면 : 문제 없음(수강완료)
-				 *   ㄴ case 2-2) 수업이 뒷시간 보다 늦게 끝나면 : 문제 발생(수강 미루기)
-				 * */
 
 				String[] planTimeSplit = plans[i][1].split(":");
 				int planHour = Integer.parseInt(planTimeSplit[0]);
 				int planMinute = Integer.parseInt(planTimeSplit[1]);
-				
-				
-						
 				
 //				date2.set(Calendar.HOUR, Integer.parseInt(plans[i + 1][1]));
 //				System.out.println();
