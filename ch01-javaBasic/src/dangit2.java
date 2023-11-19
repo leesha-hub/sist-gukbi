@@ -1,77 +1,93 @@
-//import java.util.HashMap;
-import java.util.Map;
-
-//import java.util.Arrays;
-
 /*
-players	callings	result
-["mumu", "soe", "poe", "kai", "mine"]	
-["kai", "kai", "mine", "mine"]	
-["mumu", "kai", "mine", "soe", "poe"]
+picks	minerals	result
+[1, 3, 2]	
+["diamond", "diamond", "diamond", "iron", "iron", "diamond", "iron", "stone"]	
+12
+[0, 1, 1]	
+["diamond", "diamond", "diamond", "diamond", "diamond", "iron", "iron", "iron", "iron", "iron", "diamond"]	
+50
 */
 
 public class dangit2 {
 	public static void main(String[] args) {
-		String[] players = {"mumu", "soe", "poe", "kai", "mine"};
-		String[] callings = {"kai", "kai", "mine", "mine"};
+//		int[] picks = { 1, 3, 2 };
+		int[] picks = { 0, 1, 1 };
+//		String[] minerals = { "diamond", "diamond", "diamond", "iron", "iron", "diamond", "iron", "stone" };
+		String[] minerals = { "diamond", "diamond", "diamond", "diamond", "diamond", "iron", "iron", "iron", "iron", "iron", "diamond" };
 
 		Solution ss = new Solution();
-		ss.solution(players, callings);
+		ss.solution(picks, minerals);
 	}
 }
 
-//class Solution {
-//    public String[] solution(String[] players, String[] callings) {
-//        String[] answer = {};
-//        
-//        String tmp = "";
-//        for(String callName : callings) {
-//        	for(int i=0; i<=players.length-1; i++) {
-//        		if(players[i].equals(callName)) {
-//        			if(i==0) {
-//	        			break;
-//        			} else {
-//        				tmp = players[i];
-//	        			players[i] = players[i-1];
-//	        			players[i-1] = tmp;
-//	        			break;
-//        			}
-//        		}
-//        	}
-//        }
-//        answer = players;
-//        return answer;
-//    }
-//}
-
-import java.util.HashMap;
-import java.util.Map;
-
-//class Solution {
-//    public String[] solution(String[] players, String[] callings) {
-//        String[] answer = {};        
-//        Map<String,Integer> map = new HashMap<String,Integer>();
-//        
-//        int i=0;
-//        for(String playerName : players) {
-//        	map.put(playerName, i);
-//        	i++;
-//        }
-//        for(String callName : callings) {
-//    		String tmp = "";
-//    		int findIdx = map.get(callName);
-//    		if(findIdx == 0) {
-//        		break;
-//    		} else {
-//    			map.put(callName, findIdx-1);
-//                map.put(players[findIdx-1], findIdx);
-//                
-//                tmp = players[findIdx];
-//                players[findIdx] = players[findIdx-1];
-//    			players[findIdx-1] = tmp;
-//    		}    	
-//        }
-//        answer = players;
-//        return answer;
-//    }
-//}
+/*
+ * 사용할 수 있는 곡괭이중 아무거나 하나를 선택해 광물을 캡니다. 
+ * 한 번 사용하기 시작한 곡괭이는 사용할 수 없을 때까지 사용합니다. 
+ * 광물은 주어진 순서대로만 캘 수 있습니다. 
+ * 광산에 있는 모든 광물을 캐거나, 
+ * 더 사용할 곡괭이가 없을 때까지 광물을 캡니다.
+ */
+class Solution {
+	public int solution(int[] picks, String[] minerals) {
+		int answer = 0;
+		
+		/* 광산에 있는 모든 광물을 캐거나, 
+		사용할 곡괭이가 없을 때까지 광물을 캠 */
+		int minePossibleLength = 0;
+		int selectionRowLength = 3;
+		for(int pickCheck : picks) {
+			if(pickCheck != 0) {
+				minePossibleLength += pickCheck;
+			} else {
+				selectionRowLength --;
+			}
+		}
+		minePossibleLength *= 5; // 곡괭이로 팔수 있는 mine 수
+		
+		int minePossibleLimit = (minePossibleLength >= minerals.length) ? minerals.length : minePossibleLength;
+		System.out.println(minePossibleLimit);
+		/*
+		 * [0][x] = dia
+		 * [1][x] = iron
+		 * [3][x] = stone
+		 * */
+		int[][] fatique = {
+				//다이아 철 돌
+	 /*다이아*/   {1}, {1}, {1},
+		 /*철*/   {5}, {1}, {1},
+		 /*돌*/   {25}, {5}, {1}
+		};
+		
+		int selectionColumnLength = (minePossibleLimit%5 > 0) ? minePossibleLimit/5 + 1  : minePossibleLimit/5;
+		int[][] mineSelection = new int[selectionRowLength][selectionColumnLength];
+		
+		System.out.println("selectionLength x : " + selectionRowLength);
+		System.out.println("selectionLength y : " + selectionColumnLength);
+		int selectionRowCount = 0;
+		int selectionColumnCount = 0;
+		int fatiqueCheck = 0;
+		for (int i = 0; i < minePossibleLimit; i++) {
+			if(picks[0] != 0) {
+				// 다이아는 모든 광물을 +1 로 캘수 있음
+				fatiqueCheck += 1;
+			}
+			if(picks[1] != 0) {
+				if(minerals[i].equals("diamond")) {
+					fatiqueCheck += 5;
+				} else {
+					fatiqueCheck += 1;
+				}
+			}
+			if(picks[2] != 0) {
+				if(minerals[i].equals("diamond")) {
+					fatiqueCheck += 25;
+				} else if(minerals[i].equals("iron")) {
+					fatiqueCheck += 5;
+				} else {
+					fatiqueCheck += 1;
+				}
+			}	
+		}
+		return answer;
+	}
+}
