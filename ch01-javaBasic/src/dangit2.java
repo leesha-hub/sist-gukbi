@@ -42,51 +42,96 @@ class Solution {
 				selectionRowLength --;
 			}
 		}
-		minePossibleLength *= 5; // 곡괭이로 팔수 있는 mine 수
+		minePossibleLength *= 5; // 곡괭이로 팔수 있는 minerals 수
 		
 		int minePossibleLimit = (minePossibleLength >= minerals.length) ? minerals.length : minePossibleLength;
-		System.out.println(minePossibleLimit);
-		/*
-		 * [0][x] = dia
-		 * [1][x] = iron
-		 * [3][x] = stone
-		 * */
-		int[][] fatique = {
-				//다이아 철 돌
-	 /*다이아*/   {1}, {1}, {1},
-		 /*철*/   {5}, {1}, {1},
-		 /*돌*/   {25}, {5}, {1}
-		};
 		
 		int selectionColumnLength = (minePossibleLimit%5 > 0) ? minePossibleLimit/5 + 1  : minePossibleLimit/5;
-		int[][] mineSelection = new int[selectionRowLength][selectionColumnLength];
-		
-		System.out.println("selectionLength x : " + selectionRowLength);
-		System.out.println("selectionLength y : " + selectionColumnLength);
-		int selectionRowCount = 0;
+		int[][] mineSelection = new int[3][selectionColumnLength];
 		int selectionColumnCount = 0;
-		int fatiqueCheck = 0;
-		for (int i = 0; i < minePossibleLimit; i++) {
-			if(picks[0] != 0) {
-				// 다이아는 모든 광물을 +1 로 캘수 있음
-				fatiqueCheck += 1;
+		int diaFatigueCheck  = 0;
+		int ironFatigueCheck = 0;
+		int stoneFatigueCheck = 0;
+		
+		for (int i = 0; i < minePossibleLimit; i++) {	
+			if(minerals[i].equals("diamond")) {
+				diaFatigueCheck += 1;
+				ironFatigueCheck += 5;
+				stoneFatigueCheck += 25;
+			} else if(minerals[i].equals("iron")) {
+				diaFatigueCheck += 1;
+				ironFatigueCheck += 1;
+				stoneFatigueCheck += 5;
+			} else {
+				diaFatigueCheck += 1;
+				ironFatigueCheck += 1;
+				stoneFatigueCheck += 1;
 			}
-			if(picks[1] != 0) {
-				if(minerals[i].equals("diamond")) {
-					fatiqueCheck += 5;
+			
+			if(i%5 == 4 || i == (minePossibleLimit-1)) {
+				mineSelection[0][selectionColumnCount] = diaFatigueCheck;
+				mineSelection[1][selectionColumnCount] = ironFatigueCheck;
+				mineSelection[2][selectionColumnCount] = stoneFatigueCheck;
+				diaFatigueCheck = 0;
+				ironFatigueCheck = 0;
+				stoneFatigueCheck = 0;
+				selectionColumnCount ++;
+			}
+		}
+		
+		int max = 0;
+		int maxIdx = 0;
+		int stone_max = 0; 
+		int stone_maxIdx = 0;
+		int count = 0; // 5개 광물 점수 계산시마다 count ++
+		int k = 0;
+		
+		while(count < selectionColumnLength) {
+			for (k = 0; k < selectionColumnLength; k++) {
+				if (picks[0] != 0 && mineSelection[1][k] > max) {
+					max = mineSelection[1][k];
+					maxIdx = k;
 				} else {
-					fatiqueCheck += 1;
+					if (mineSelection[2][k] != 0 && mineSelection[2][k] > stone_max) {
+						stone_max = mineSelection[2][k];
+						stone_maxIdx = k;
+					}
 				}
 			}
-			if(picks[2] != 0) {
-				if(minerals[i].equals("diamond")) {
-					fatiqueCheck += 25;
-				} else if(minerals[i].equals("iron")) {
-					fatiqueCheck += 5;
-				} else {
-					fatiqueCheck += 1;
+		
+			if(max > 0) {
+				answer += mineSelection[0][maxIdx];
+				mineSelection[1][maxIdx] = 0;
+				picks[0]--;
+				
+				// 초기화
+				max = 0;
+				maxIdx = 0;
+			} else {
+				if (picks[1] != 0) {
+					if(mineSelection[1][stone_maxIdx] != 0) {
+						answer += mineSelection[1][stone_maxIdx];
+						mineSelection[2][stone_maxIdx] = 0;
+						picks[1]--;
+					} else {
+						mineSelection[2][stone_maxIdx] = 0;
+						count --;
+					}
+				} else if (picks[2] != 0) {
+					answer += mineSelection[2][stone_maxIdx];
+					mineSelection[2][stone_maxIdx] = 0;
+					picks[2]--;
 				}
-			}	
+				// 초기화
+				stone_max = 0;
+				stone_maxIdx = 0;
+			}
+			
+			count++;
+			if (count < selectionColumnLength) {
+				k = 0;
+			}
+			
 		}
 		return answer;
 	}
