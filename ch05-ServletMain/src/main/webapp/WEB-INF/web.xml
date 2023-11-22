@@ -11,14 +11,23 @@
     <location>/ch06-errorPage/error/error500</location>
 </error-page>
 
-<servlet>
+<!-- <servlet>
     <servlet-name>DispatcherServlet</servlet-name>
     <servlet-class>kr.web.mvc.DispatcherServlet</servlet-class>
+</servlet>
+ -->
+ 
+<servlet>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <servlet-class>kr.controller.DispatcherServlet</servlet-class>
+    <init-param>
+    	<param-name>propertiesPath</param-name>
+    	<param-value>/WEB-INF/ActionMap.properties</param-value>
+    </init-param>
 </servlet>
  
 <servlet-mapping>
     <servlet-name>DispatcherServlet</servlet-name>
-    <!--  <url-pattern>/dispatcher</url-pattern> -->
     <url-pattern>*.do</url-pattern>
 </servlet-mapping>
 
