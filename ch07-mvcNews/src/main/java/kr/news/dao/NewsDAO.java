@@ -149,13 +149,70 @@ public class NewsDAO {
 	}
 	//뉴스 수정
 	public void updateNews(NewsVO vo)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		String sub_sql = "";
+		int cnt = 0;
+		
+		try {
+			//커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			if(vo.getFilename()!=null) {
+				//파일이 업로드된 경우
+				sub_sql += ",filename=?";
+			}
+			sql = "UPDATE dailynews SET title=?,writer=?,"
+				+ "email=?,article=?"+sub_sql+" WHERE num=?";
+			//PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			//?에 데이터 바인딩
+			pstmt.setString(++cnt, vo.getTitle());
+			pstmt.setString(++cnt, vo.getWriter());
+			pstmt.setString(++cnt, vo.getEmail());
+			pstmt.setString(++cnt, vo.getArticle());
+			if(vo.getFilename()!=null) {
+				pstmt.setString(++cnt, vo.getFilename());
+			}
+			pstmt.setInt(++cnt, vo.getNum());
+			//SQL문 실행
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
 		
 	}
 	//뉴스 삭제
 	public void deleteNews(int num)throws Exception{
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
 		
+		try {
+			//커넥션풀로부터 커넥션 할당
+			conn = DBUtil.getConnection();
+			//SQL문 작성
+			sql = "DELETE FROM dailynews WHERE num=?";
+			//PreparedStatement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			//?에 데이터 바인딩
+			pstmt.setInt(1, num);
+			//SQL문 실행
+			pstmt.executeUpdate();			
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			DBUtil.executeClose(null, pstmt, conn);
+		}
 	}
 	
 }
+
+
+
+
+
 
 
