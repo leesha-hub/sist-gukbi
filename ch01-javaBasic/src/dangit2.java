@@ -60,43 +60,48 @@ class Solution {
 		 * 4. 가로 OR 세로 OR 대각선 빙고시 게임종료 
 		 * ㄴ 이때 서로 같거나 한쪽이 크면 FALSE
 		 */
-		boolean bingoFirstYN = true;
-		boolean bingoSecondYN = true;
+		boolean bingoFirstYN = false;
+		boolean bingoSecondYN = false;
 		if (board[0].equals("OOO") || board[1].equals("OOO") || board[2].equals("OOO")) {
 			bingoFirstYN = true;
-		} else if (board[0].equals("XXX") || board[1].equals("XXX") || board[2].equals("XXX")) {
+		} 
+		if (board[0].equals("XXX") || board[1].equals("XXX") || board[2].equals("XXX")) {
 			bingoSecondYN = true;
-		} else if (("" + boardRenew[0][0] + boardRenew[1][0] + boardRenew[2][0]).equals("OOO")
+		} 
+		if (("" + boardRenew[0][0] + boardRenew[1][0] + boardRenew[2][0]).equals("OOO")
 				|| ("" + boardRenew[0][1] + boardRenew[1][1] + boardRenew[2][1]).equals("OOO")
 				|| ("" + boardRenew[0][2] + boardRenew[1][2] + boardRenew[2][2]).equals("OOO")) {
 			bingoFirstYN = true;
-		} else if (("" + boardRenew[0][0] + boardRenew[1][0] + boardRenew[2][0]).equals("XXX")
+		} 
+		if (("" + boardRenew[0][0] + boardRenew[1][0] + boardRenew[2][0]).equals("XXX")
 				|| ("" + boardRenew[0][1] + boardRenew[1][1] + boardRenew[2][1]).equals("XXX")
 				|| ("" + boardRenew[0][2] + boardRenew[1][2] + boardRenew[2][2]).equals("XXX")) {
 			bingoSecondYN = true;
-		} else if (("" + boardRenew[0][0] + boardRenew[1][1] + boardRenew[2][2]).equals("OOO")
+		} 
+		if (("" + boardRenew[0][0] + boardRenew[1][1] + boardRenew[2][2]).equals("OOO")
 				|| ("" + boardRenew[0][2] + boardRenew[1][1] + boardRenew[2][0]).equals("OOO")) {
 			bingoFirstYN = true;
-		} else if (("" + boardRenew[0][0] + boardRenew[1][1] + boardRenew[2][2]).equals("XXX")
+		} 
+		if (("" + boardRenew[0][0] + boardRenew[1][1] + boardRenew[2][2]).equals("XXX")
 				|| ("" + boardRenew[0][2] + boardRenew[1][1] + boardRenew[2][0]).equals("XXX")) {
 			bingoSecondYN = true;
-		} else {
-			bingoFirstYN = false;
-			bingoSecondYN = false;
-		}
+		} 
 		
 		if(bingoFirstYN == true) {
-			if(batFirstCount >= batSecondCount) {
+			if(bingoSecondYN == false) {
 				answer = 0;
+			} else {
+				answer = 1;
 			}
 		}
 		
 		if(bingoSecondYN == true) {
-			if(batSecondCount >= batFirstCount) {
+			if(bingoFirstYN == true) {
 				answer = 0;
+			} else {
+				answer = 1;
 			}
 		}
-		System.out.println(answer);
 		return answer;
 	}
 }
