@@ -54,6 +54,35 @@ $(function(){
 						(${board.filename})파일이 등록되어 있습니다.
 						<input type="button" value="파일삭제"
 						                       id="file_del">
+						<script type="text/javascript">
+							$(function(){
+								$('#file_del').click(function(){
+									let choice = confirm('삭제하시겠습니까?');
+									if(choice){
+										$.ajax({
+											url:'deleteFile.do',
+											type:'post',
+											data:{board_num:${board.board_num}},
+											dataType:'json',
+											success:function(param){
+												if(param.result == 'logout'){
+													alert('로그인 후 사용하세요');
+												}else if(param.result == 'success'){
+													$('#file_detail').hide();
+												}else if(param.result == 'wrongAccess'){
+													alert('잘못된 접속입니다.');
+												}else{
+													alert('파일 삭제 오류 발생');
+												}
+											},
+											error:function(){
+												alert('네트워크 오류 발생');
+											}
+										});
+									}
+								});
+							});
+						</script>                       
 					</div>
 					</c:if>  
 				</li>
@@ -61,7 +90,7 @@ $(function(){
 			<div class="align-center">
 				<input type="submit" value="수정">
 				<input type="button" value="목록" 
-				                  onclick="location.herf='list.do'">
+				                  onclick="location.href='list.do'">
 			</div>
 		</form>
 	</div>
