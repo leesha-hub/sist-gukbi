@@ -31,7 +31,7 @@ public class UserModifyAction implements Action{
 			return "/WEB-INF/views/common/notice.jsp";
 		}
 		
-		//주문 수정전 배송상태 체크
+		//배송지 수정전 배송상태 체크
 		if(db_order.getStatus()>1) {
 			//배송준비중 이상으로 관리자가 변경한 상품을 주문자가 변경할 수 없음
 			request.setAttribute("notice_msg", 
@@ -43,8 +43,6 @@ public class UserModifyAction implements Action{
 		
 		OrderVO order = new OrderVO();
 		order.setOrder_num(order_num);
-		order.setStatus(Integer.parseInt(
-				               request.getParameter("status")));
 		order.setReceive_name(request.getParameter("receive_name"));
 		order.setReceive_post(request.getParameter("receive_post"));
 		order.setReceive_address1(
