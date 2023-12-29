@@ -12,10 +12,5 @@ public class WriteArticleService {
 		System.out.println("WriteArticleService의 write()메서드 실행");
 		
 		writeArticleDAO.insert();
-	}
-	
+	}	
 }
-
-
-
-

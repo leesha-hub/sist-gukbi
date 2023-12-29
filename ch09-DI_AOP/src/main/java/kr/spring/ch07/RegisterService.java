@@ -11,6 +11,4 @@ public class RegisterService {
 		System.out.println("RegisterService의 write() 메서드 실행");
 		registerDAO.insert();
 	}
-	
-	
 }
