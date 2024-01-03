@@ -21,13 +21,10 @@ public class NewArticleController {
 	@PostMapping("/article/newArticle.do")
 	public String submit(
 			@ModelAttribute("vo") NewArticleVO newArticleVO) {
-		
+			
 		
 		
 		return "article/newArticleSubmitted";
 	}
 	
 }
-
-
-

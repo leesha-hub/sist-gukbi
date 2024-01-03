@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /*
- * 설정파일에 <context:component-scan> 태그를 추가하고 자동 스캔을 해야 하는
+ * 설정파일에 <context:component-scan> ㅌ그를 추가하고 자동 스캔을 해야 하는
  * 패키지를 지정하면 해당 패키지에서 @Component 어노테이션이 적용된 클래스를
  * 검색하여 빈 객체로 등록
  * 
