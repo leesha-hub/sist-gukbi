@@ -41,26 +41,26 @@ public class MyFirstAspect {
 	@Pointcut("execution(public String launch())")
 	public void getPointcut() {}
 	
-	//@Before("getPointcut()")
+	@Before("getPointcut()")
 	public void before() {
 		//메서드 시작 직전에 동작하는 어드바이스
 		System.out.println("Hello Before! **메서드가 호출되기 전에 나온다!");
 	}
 	
-	//@AfterReturning(value="getPointcut()",returning="msg")
+	@AfterReturning(value="getPointcut()",returning="msg")
 	public void afterReturning(String msg) {
 		//메서드 호출이 예외를 내보내지 않고 종료했을 때 동작하는 어드바이스
 		System.out.println(
 		"Hello AfterReturning! **메서드가 호출한 후에 나온다! 전달된 객체 : " + msg);
 	}
 	
-	//@AfterThrowing(value="getPointcut()",throwing="ex")
+	@AfterThrowing(value="getPointcut()",throwing="ex")
 	public void afterThrowing(Throwable ex) {
 		//메서드 호출이 예외를 던졌을 때 동작하는 어드바이스
 		System.out.println("Hello AfterThrowing! **예외가 생기면 나온다!");
 	}
 	
-	//@After("getPointcut()")
+	@After("getPointcut()")
 	public void after() {
 		//메서드 종료 후에 동작하는 어드바이스
 		System.out.println("Hello After! **메서드가 호출된 후에 나온다");

@@ -23,4 +23,8 @@ public class NewArticleVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	@Override
+	public String toString() {
+		return "NewArticleVO [parentId=" + parentId + ", title=" + title + ", content=" + content + "]";
+	}
 }

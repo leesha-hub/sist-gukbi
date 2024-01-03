@@ -40,33 +40,16 @@ execution(* read*(Integer,..))
 		<!-- 공통 기능을 구현 클래스 지정 -->
 		<aop:aspect id="aspect" ref="myFirstAdvice">
 			<!-- 공통 기능을 적용할 클래스(핵심 기능을 구현한 클래스)를 검색 -->
-			<aop:pointcut expression="execution(public String launch())" 
-			                                         id="publicMethod"/>
+			<aop:pointcut
+				expression="execution(public String launch())" id="publicMethod" />
 			<!-- 핵심 기능을 실행할 때 어느 시점에 공통 기능을 적용할지 지정 -->
-			<!-- <aop:before method="before" pointcut-ref="publicMethod"/> -->
-			<!-- <aop:after-returning method="afterReturning"
-			          pointcut-ref="publicMethod" returning="msg"/> -->
-			<!-- <aop:after-throwing method="afterThrowing" 
-			      pointcut-ref="publicMethod" throwing="ex"/> -->
-			<!-- <aop:after method="after" pointcut-ref="publicMethod"/> --> 
-			<aop:around method="around" pointcut-ref="publicMethod"/>               
+			<aop:before method="before" pointcut-ref="publicMethod" />
+			<aop:after-returning method="afterReturning"
+				pointcut-ref="publicMethod" returning="msg" />
+			<aop:after-throwing method="afterThrowing"
+				pointcut-ref="publicMethod" throwing="ex" />
+			<aop:after method="after" pointcut-ref="publicMethod" />
+			<aop:around method="around" pointcut-ref="publicMethod" />
 		</aop:aspect>
 	</aop:config>
 </beans>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
