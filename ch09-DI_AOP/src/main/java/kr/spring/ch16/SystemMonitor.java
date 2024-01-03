@@ -31,7 +31,3 @@ public class SystemMonitor {
 		return "SystemMonitor [periodTime=" + periodTime + ", sender=" + sender + "]";
 	}
 }
-
-
-
-

@@ -46,17 +46,17 @@
 			<ref bean="smsSender"/>
 		</constructor-arg>
 		
-		<!-- 2. 속성으로 값 또는 객체 설정-->
+		<!-- 2. 속성으로 값 또는 객체 설정
 		<constructor-arg value="20"/>
 		<constructor-arg ref="smsSender"/>
 		
-		<!-- 3. 순서를 무시할 때는 index 표시 -->
+		3. 순서를 무시할 때는 index 표시
 		<constructor-arg ref="smsSender" index="1"/>
 		<constructor-arg value="30" index="0"/>
 		
-		<!-- 4. 생성자의 인자명 기재 -->
+		4. 생성자의 인자명 기재
 		<constructor-arg name="periodTime" value="40"/>
-		<constructor-arg name="sender" ref="smsSender"/>		
+		<constructor-arg name="sender" ref="smsSender"/>	 -->	
 	</bean>
 	<bean id="smsSender" class="kr.spring.ch06.SmsSender"/>
 	 
