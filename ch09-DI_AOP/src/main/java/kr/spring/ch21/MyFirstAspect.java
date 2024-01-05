@@ -12,30 +12,6 @@ import org.aspectj.lang.annotation.Pointcut;
 //공통 기능을 구현한 클래스
 @Aspect
 public class MyFirstAspect {
-	/*
-	 * 구현 가능한 Advice(언제 공통 기능을 핵심 로직에 적용할 지를 정의) 종류
-	 * 종류						설명
-	 * Before Advice			대상 객체의 메서드 호출 전에 공통 기능을 실행
-	 * @Before
-	 * 
-	 * After Returning Advice	대상 객체의 메서드가 예외 없이 실행한 이후에
-	 *                          공통 기능을 실행
-	 * @AfterReturning
-	 *                          
-	 * After Throwing Advice	대상 객체의 메서드를 실행하는 도중 예외가 
-	 *                          발생한 경우에 공통 기능을 실행 
-	 * @AfterThrowing
-	 *                          
-	 * After Advice				대상 객체의 메서드를 실행하는 도중 예외가
-	 *                          발생했는지의 여부와 상관없이 메서드 실행 후
-	 *                          공통 기능을 실행(try~catch~finally의 
-	 *                          finally 블럭과 비슷)  
-	 * @After
-	 *                                                                           
-	 * Around Advice			대상 객체의 메서드 실행 전, 후 또는 예외
-	 *                          발생 시점에 공통 기능을 실행하는데 사용
-	 * @Around                         
-	 */
 	
 	//핵심 기능이 있는 객체의 메서드 검색
 	@Pointcut("execution(public String launch())")
@@ -81,14 +57,7 @@ public class MyFirstAspect {
 		}finally {
 			System.out.println(
 			"Hello Around after! **메서드가 호출된 후에 나온다! 반환된 객체 : " + s);
-		}
-		
+		}	
 		return s;
-	}
-	
+	}	
 }
-
-
-
-
-

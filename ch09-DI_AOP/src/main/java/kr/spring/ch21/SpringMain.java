@@ -18,7 +18,3 @@ public class SpringMain {
 		context.close();
 	}
 }
-
-
-
-
