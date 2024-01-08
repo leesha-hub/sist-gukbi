@@ -22,6 +22,12 @@ public class BoardDAOImpl implements BoardDAO{
 			"SELECT * FROM (SELECT a.*,rownum rnum FROM "
 			+"(SELECT * FROM aboard ORDER BY reg_date DESC)a) "
 			+"WHERE rnum >= ? AND rnum <= ?";
+	private static final String SELECT_DETAIL_SQL = 
+			"SELECT * FROM aboard WHERE num=?";
+	private static final String UPDATE_SQL = 
+			"UPDATE aboard SET writer=?,title=?,content=? WHERE num=?";
+	private static final String DELETE_SQL = 
+			"DELETE FROM aboard WHERE num=?";
 	
 	private RowMapper<BoardVO> rowMapper = 
 			new RowMapper<BoardVO>() {
@@ -65,20 +71,25 @@ public class BoardDAOImpl implements BoardDAO{
 
 	@Override
 	public BoardVO getBoard(int num) {
-		// TODO Auto-generated method stub
-		return null;
+		BoardVO board = jdbcTemplate.queryForObject(
+				SELECT_DETAIL_SQL,new Object[] {num},rowMapper);
+		return board;
 	}
 
 	@Override
 	public void updateBoard(BoardVO board) {
-		// TODO Auto-generated method stub
-		
+		jdbcTemplate.update(UPDATE_SQL,
+				new Object[] {board.getWriter(),board.getTitle(),
+						      board.getContent(),board.getNum()});
 	}
 
 	@Override
 	public void deleteBoard(int num) {
-		// TODO Auto-generated method stub
-		
+		jdbcTemplate.update(DELETE_SQL,new Object[] {num});
 	}
 
 }
+
+
+
+

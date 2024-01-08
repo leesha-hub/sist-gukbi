@@ -36,7 +36,7 @@
     	<property name="maxActive" value="50"/>
     	<!-- 접속이 없을 경우 최대 유지 커넥션 개수 -->
     	<property name="maxIdle" value="30"/>
-    	<!-- 접속이 없을 겨우 최소 유지 커넥션 개수 -->
+    	<!-- 접속이 없을 경우 최소 유지 커넥션 개수 -->
     	<property name="minIdle" value="20"/> 
     	<!-- 최대 대기시간(초) : 초과시 연결 실패 오류 발생 -->
     	<property name="maxWait" value="5"/>          
@@ -46,9 +46,21 @@
     <bean name="jdbcTemplate" 
        class="org.springframework.jdbc.core.JdbcTemplate">
     	<property name="dataSource" ref="dataSource"/>   
-    </bean>  
+    </bean> 
+    
+    <!-- JDBC 기반 트랜잭션 관리자 설정 --> 
+    <bean id="transactionManager"
+      class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+      p:dataSource-ref="dataSource"/>
+      
+   <!-- 어노테이션 방식으로 트랜잭션 처리 --> 
+   <tx:annotation-driven transaction-manager="transactionManager"/>  
 	
 </beans>
+
+
+
+
 
 
 
