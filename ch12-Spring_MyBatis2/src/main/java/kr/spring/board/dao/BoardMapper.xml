@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.spring.board.dao.BoardMapper">
+	<!--  
 	<insert id="insertBoard" parameterType="boardVO">
 		INSERT INTO aboard(
 		  num,
@@ -17,12 +18,15 @@
 		  #{content},
 		  SYSDATE)
 	</insert>
+	-->
 	
+	<!--  
 	<select id="selectBoardCount" resultType="integer">
 		SELECT
 		  COUNT(*)
 		FROM aboard
 	</select>
+	-->
 	
 	<select id="selectBoardList" parameterType="map" 
 	                                 resultType="boardVO">
@@ -40,6 +44,7 @@
 	   ]]>            
 	</select>
 	
+	<!--  
 	<select id="selectBoard" parameterType="integer" 
 	                                 resultType="boardVO">
 		SELECT
@@ -47,6 +52,27 @@
 		FROM aboard
 		WHERE num=#{num}
 	</select>
+	-->
+	
+	<!--  
+	<update id="updateBoard" parameterType="boardVO">
+		UPDATE 
+		  aboard
+		SET 
+		  writer=#{writer},
+		  title=#{title},
+		  content=#{content}
+		WHERE 
+		  num=#{num}
+	</update>
+	-->
+	
+	<!--  
+	<delete id="deleteBoard" parameterType="integer">
+		DELETE FROM aboard
+		WHERE num=#{num}
+	</delete>
+	-->
 	
 </mapper>
 
