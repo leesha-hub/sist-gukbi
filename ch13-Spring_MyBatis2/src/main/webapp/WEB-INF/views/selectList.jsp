@@ -6,10 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판 목록</title>
-<%-- <link rel="stylesheet" 
-  href="${pageContext.request.contextPath}/resources/css/style.css"> --%>
+<link rel="stylesheet" 
+  href="${pageContext.request.contextPath}/css/style.css">
 </head>
-<body><%-- 
+<body>
 <div class="page-main">
 	<h2>게시판 목록</h2>
 	<div class="align-right">
@@ -39,9 +39,9 @@
 	<div class="align-center">${page}</div>
 	</c:if>
 </div>
- --%>
 </body>
 </html>
+
 
 
 
