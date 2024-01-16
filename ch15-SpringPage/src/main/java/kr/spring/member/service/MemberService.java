@@ -10,5 +10,13 @@ public interface MemberService {
 	public void updateMember(MemberVO member);
 	public void updatePassword(MemberVO member);
 	public void deleteMember(int mem_num);
+	//자동 로그인
+	public void updateAu_id(String au_id, int mem_num);
+	public void selectAu_id(String au_id);
+	public void deleteAu_id(int mem_num);
+	//프로필 이미지 업데이트
+	public void updateProfile(MemberVO member);
+
+
 	//회원관리 - 관리자
 }
