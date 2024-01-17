@@ -14,6 +14,10 @@ public interface BoardService {
 	public void updateHit(int board_num);
 	public void udpateBoard(BoardVO board);
 	public void deleteBoard(int board_num);
+	public void deleteFile(int board_num);
 	//좋아요
 	//댓글
 }
+
+
+
