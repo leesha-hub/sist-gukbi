@@ -3,6 +3,9 @@ package kr.spring.board.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Select;
+
+import kr.spring.board.vo.BoardFavVO;
 import kr.spring.board.vo.BoardVO;
 
 public interface BoardService {
@@ -12,10 +15,14 @@ public interface BoardService {
 	public void insertBoard(BoardVO board);
 	public BoardVO selectBoard(int board_num);
 	public void updateHit(int board_num);
-	public void udpateBoard(BoardVO board);
+	public void updateBoard(BoardVO board);
 	public void deleteBoard(int board_num);
 	public void deleteFile(int board_num);
 	//좋아요
+	public BoardFavVO selectFav(BoardFavVO fav);
+	public int selectFavCount(int board_num);
+	public void insertFav(BoardFavVO fav);
+	public void deleteFav(BoardFavVO boardFav);
 	//댓글
 }
 
