@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Select;
 
 import kr.spring.board.vo.BoardFavVO;
+import kr.spring.board.vo.BoardReplyVO;
 import kr.spring.board.vo.BoardVO;
 
 public interface BoardService {
@@ -24,6 +25,12 @@ public interface BoardService {
 	public void insertFav(BoardFavVO fav);
 	public void deleteFav(BoardFavVO boardFav);
 	//댓글
+	public List<BoardReplyVO> selectListReply(Map<String,Object> map);
+	public int selectRowCountReply(Map<String,Object> map);
+	public BoardReplyVO selectReply(int re_num);
+	public void insertReply(BoardReplyVO boardReply);
+	public void updateReply(BoardReplyVO boardReply);
+	public void deleteReply(int re_num);
 }
 
 
