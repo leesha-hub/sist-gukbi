@@ -42,6 +42,7 @@ public interface BoardMapper {
 	 
 	 //댓글
 	 public List<BoardReplyVO> selectListReply(Map<String,Object> map);
+	 @Select("SELECT COUNT(*) FROM spboard_reply WHERE board_num=#{board_num}")
 	 public int selectRowCountReply(Map<String,Object> map);
 	 public BoardReplyVO selectReply(int re_num);
 	 public void insertReply(BoardReplyVO boardReply);
