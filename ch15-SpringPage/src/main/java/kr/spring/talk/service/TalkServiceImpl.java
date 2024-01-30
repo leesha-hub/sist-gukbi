@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.spring.talk.dao.TalkMapper;
 import kr.spring.talk.vo.TalkMemberVO;
 import kr.spring.talk.vo.TalkRoomVO;
+import kr.spring.talk.vo.TalkVO;
 
 @Service
 @Transactional
@@ -49,8 +50,32 @@ public class TalkServiceImpl implements TalkService{
 
 	@Override
 	public List<TalkMemberVO> selectTalkMember(int talkroom_num) {
-		// TODO Auto-generated method stub
-		return null;
+		return talkMapper.selectTalkMember(talkroom_num);
+	}
+
+	@Override
+	public void insertTalk(TalkVO talkVO) {
+		talkVO.setTalk_num(talkMapper.selectTalkNum());
+		talkMapper.insertTalk(talkVO);
+		//채팅 멤버가 읽지 않은 채팅 정보 저장
+		for(TalkMemberVO vo : talkMapper.selectTalkMember(
+				                          talkVO.getTalkroom_num())) {
+			talkMapper.insertTalkRead(talkVO.getTalkroom_num(),
+					                  talkVO.getTalk_num(),
+					                  vo.getMem_num());
+		}
+	}
+
+	@Override
+	public List<TalkVO> selectTalkDetail(Map<String, Integer> map) {
+		//읽은 채팅 기록 삭제
+		talkMapper.deleteTalkRead(map);
+		return talkMapper.selectTalkDetail(map);
 	}
 
 }
+
+
+
+
+

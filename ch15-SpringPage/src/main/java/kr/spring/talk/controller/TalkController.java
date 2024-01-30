@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.talk.service.TalkService;
+import kr.spring.talk.vo.TalkMemberVO;
 import kr.spring.talk.vo.TalkRoomVO;
 import kr.spring.talk.vo.TalkVO;
 import kr.spring.util.PageUtil;
@@ -111,6 +112,61 @@ public class TalkController {
 	/*==========================
 	 * 채팅 메시지 처리
 	 *==========================*/
+	//채팅 메시지 페이지 호출
+	@RequestMapping("/talk/talkDetail")
+	public String talkDetail(@RequestParam int talkroom_num,
+			                 Model model, HttpSession session) {
+		String chatMember = "";
+		String room_name = "";
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		List<TalkMemberVO> list = 
+				           talkService.selectTalkMember(talkroom_num);
+		for(int i=0;i<list.size();i++) {
+			TalkMemberVO vo = list.get(i);
+			//로그인한 회원의 채팅방 이름 셋팅
+			if(user.getMem_num() == vo.getMem_num()) {
+				room_name = vo.getRoom_name();
+			}
+			//채팅 멤버 저장
+			if(i>0) chatMember += ",";
+			chatMember += list.get(i).getId();
+		}
+		
+		//채팅 멤버 id
+		model.addAttribute("chatMember", chatMember);
+		//채팅 멤버수
+		model.addAttribute("chatCount", list.size());
+		//로그인한 회원의 채팅방 이름
+		model.addAttribute("room_name", room_name);
+		
+		return "talkDetail";
+	}
+	//채팅 메시지 읽기
+	@RequestMapping("/talk/talkDetailAjax")
+	@ResponseBody
+	public Map<String,Object> talkDetailAjax(
+			                   @RequestParam int talkroom_num,
+			                   HttpSession session){
+		Map<String,Object> mapAjax = new HashMap<String,Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {//로그인이 되지 않은 경우
+			mapAjax.put("result", "logout");
+		}else {//로그인 된 경우
+			Map<String,Integer> map = new HashMap<String,Integer>();
+			map.put("talkroom_num", talkroom_num);
+			map.put("mem_num", user.getMem_num());
+			List<TalkVO> list = talkService.selectTalkDetail(map);
+			
+			mapAjax.put("result", "success");
+			mapAjax.put("list", list);
+			mapAjax.put("user_num", user.getMem_num());			
+		}		
+		return mapAjax;
+	}
+	
 	
 	/*==========================
 	 * 초대한 회원의 id 구하기

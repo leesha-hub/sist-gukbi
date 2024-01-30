@@ -3,6 +3,7 @@ package kr.spring.talk.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -39,6 +40,7 @@ public interface TalkMapper {
 	@Insert("INSERT INTO sptalk (talk_num,talkroom_num,mem_num,message) VALUES (#{talk_num},#{talkroom_num},#{mem_num},#{message})")
 	public void insertTalk(TalkVO talkVO);
 	//읽지 않은 채팅 기록 저장
+	@Insert("INSERT INTO sptalk_read (talkroom_num,talk_num,mem_num) VALUES (#{talkroom_num},#{talk_num},#{mem_num})")
 	public void insertTalkRead(
 			            @Param(value="talkroom_num") int talkroom_num,
 			            @Param(value="talk_num") int talk_num,
@@ -46,6 +48,7 @@ public interface TalkMapper {
 	//채팅 메시지 읽기
 	public List<TalkVO> selectTalkDetail(Map<String,Integer> map);
 	//읽은 채팅 기록 삭제
+	@Delete("DELETE FROM sptalk_read WHERE talkroom_num=#{talkroom_num} AND mem_num=#{mem_num}")
 	public void deleteTalkRead(Map<String,Integer> map);
 	
 	
