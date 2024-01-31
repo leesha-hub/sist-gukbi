@@ -73,6 +73,11 @@ public class TalkServiceImpl implements TalkService{
 		return talkMapper.selectTalkDetail(map);
 	}
 
+	@Override
+	public void changeRoomName(TalkMemberVO vo) {
+		talkMapper.changeRoomName(vo);
+	}
+
 }
 
 

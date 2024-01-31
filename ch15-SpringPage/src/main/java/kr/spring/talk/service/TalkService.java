@@ -21,6 +21,8 @@ public interface TalkService {
 	//채팅 메시지 읽기
 	public List<TalkVO> selectTalkDetail(Map<String,Integer> map);
 	
+	//채팅방 이름 변경하기
+	public void changeRoomName(TalkMemberVO vo);
 
 
 }

@@ -167,6 +167,46 @@ public class TalkController {
 		return mapAjax;
 	}
 	
+	//채팅 메시지 전송
+	@RequestMapping("/talk/writeTalk")
+	@ResponseBody
+	public Map<String,Object> writeTalkAjax(TalkVO vo, HttpSession session){
+		
+		Map<String,Object> mapAjax = new HashMap<String,Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {//로그인이 되지 않은 경우
+			mapAjax.put("result", "logout");
+		}else {//로그인 된 경우
+			vo.setMem_num(user.getMem_num());
+			
+			log.debug("<<채팅 메시지 등록 TalkVO>> : " + vo);
+			talkService.insertTalk(vo);
+			
+			mapAjax.put("result", "success");
+		}
+		return mapAjax;
+	}
+	
+	/*==========================
+	 * 채팅방 이름 변경
+	 *==========================*/
+	@RequestMapping("/talk/changeName")
+	@ResponseBody
+	public Map<String,String> changeName(TalkMemberVO vo, 
+			                              HttpSession session){
+		Map<String,String> mapAjax = new HashMap<String,String>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {//로그인이 되지 않은 경우
+			mapAjax.put("result","logout");
+		}else {//로그인 된 경우
+			vo.setMem_num(user.getMem_num());
+			talkService.changeRoomName(vo);
+			mapAjax.put("result", "success");
+		}		
+		return mapAjax;
+	}
 	
 	/*==========================
 	 * 초대한 회원의 id 구하기

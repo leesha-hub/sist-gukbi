@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import kr.spring.talk.vo.TalkMemberVO;
 import kr.spring.talk.vo.TalkRoomVO;
@@ -51,6 +52,9 @@ public interface TalkMapper {
 	@Delete("DELETE FROM sptalk_read WHERE talkroom_num=#{talkroom_num} AND mem_num=#{mem_num}")
 	public void deleteTalkRead(Map<String,Integer> map);
 	
+	//채팅방 이름 변경하기
+	@Update("UPDATE sptalk_member SET room_name=#{room_name} WHERE talkroom_num=#{talkroom_num} AND mem_num=#{mem_num}")
+	public void changeRoomName(TalkMemberVO vo);
 	
 }
 
