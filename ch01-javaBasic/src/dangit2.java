@@ -8,16 +8,14 @@ board	result
 
 public class dangit2 {
 	public static void main(String[] args) {
-		String[] board = { "...D..R", ".D.G...", "....D.D", "D....D.", "..D...." };
-//		String[] board = { ".D.R", "....", ".G..", "...D" };
-
+		String s = "banana";
 		Solution ss = new Solution();
-		ss.solution(board);
+		ss.solution(s);
 	}
 }
 
 class Solution {
-    public int solution(String[] board) {
+    public int solution(String s) {
         int answer = 0;
         return answer;
     }
